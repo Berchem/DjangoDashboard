@@ -19,5 +19,12 @@ from Futures import views
 
 urlpatterns = [
     url('admin/', admin.site.urls),
-    url('index/', views.index)
+    url('^$', views.redirect),
+    # url('^index/$', views.index),  # aka /
+    url('^widgets/$', views.widgets),
+    url('^charts/$', views.charts),
+    url('^elements/$', views.elements),
+    url('^panels/$', views.panels),
+    url('^login/$', views.login),
+
 ]
