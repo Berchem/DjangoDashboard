@@ -3,7 +3,8 @@ from django.shortcuts import render
 
 # Create your views here.
 def redirect(requests):
-    return render(requests, 'index.html')
+    title = "Dashboard"
+    return render(requests, 'index.html', locals())
 
 
 def index(requests):
@@ -11,19 +12,23 @@ def index(requests):
 
 
 def widgets(requests):
-    return render(requests, 'widgets.html')
+    title = "Widgets"
+    return render(requests, 'widgets.html', locals())
 
 
 def charts(requests):
-    return render(requests, 'charts.html')
+    title = "Charts"
+    return render(requests, 'charts.html', locals())
 
 
 def elements(requests):
-    return render(requests, 'elements.html')
+    title = "UI Elements"
+    return render(requests, 'elements.html', locals())
 
 
 def panels(requests):
-    return render(requests, 'panels.html')
+    title = "Panels"
+    return render(requests, 'panels.html', locals())
 
 
 def login(requests):
