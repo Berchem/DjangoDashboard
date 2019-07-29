@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
+{% block header %}
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Lumino - Dashboard</title>
+	<title>Lumino - {{title}}</title>
 	<link href="/static/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/static/css/font-awesome.min.css" rel="stylesheet">
 	<link href="/static/css/datepicker3.css" rel="stylesheet">
@@ -16,7 +17,10 @@
 	<script src="/static/js/respond.min.js"></script>
 	<![endif]-->
 </head>
+{% endblock %}
+
 <body>
+{% block nav %}
 	<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -81,6 +85,9 @@
 			</div>
 		</div><!-- /.container-fluid -->
 	</nav>
+{% endblock %}
+
+{% block sidebar %}
 	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
 		<div class="profile-sidebar">
 			<div class="profile-userpic">
@@ -98,12 +105,19 @@
 				<input type="text" class="form-control" placeholder="Search">
 			</div>
 		</form>
+
 		<ul class="nav menu">
-			<li class="active"><a href="/"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
-			<li><a href="/widgets"><em class="fa fa-calendar">&nbsp;</em> Widgets</a></li>
-			<li><a href="/charts"><em class="fa fa-bar-chart">&nbsp;</em> Charts</a></li>
-			<li><a href="/elements"><em class="fa fa-toggle-off">&nbsp;</em> UI Elements</a></li>
-			<li><a href="/panels"><em class="fa fa-clone">&nbsp;</em> Alerts &amp; Panels</a></li>
+
+			{% if title == "Dashboard" %} <li class="active"> {% else %} <li> {% endif %}
+				<a href="/"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
+			{% if title == "Widgets" %} <li class="active"> {% else %} <li> {% endif %}
+				<a href="/widgets"><em class="fa fa-calendar">&nbsp;</em> Widgets</a></li>
+			{% if title == "Charts" %} <li class="active"> {% else %} <li> {% endif %}
+				<a href="/charts"><em class="fa fa-bar-chart">&nbsp;</em> Charts</a></li>
+			{% if title == "UI Elements" %} <li class="active"> {% else %} <li> {% endif %}
+				<a href="/elements"><em class="fa fa-toggle-off">&nbsp;</em> UI Elements</a></li>
+			{% if title == "Panels" %} <li class="active"> {% else %} <li> {% endif %}
+				<a href="/panels"><em class="fa fa-clone">&nbsp;</em> Alerts &amp; Panels</a></li>
 			<li class="parent "><a data-toggle="collapse" href="#sub-item-1">
 				<em class="fa fa-navicon">&nbsp;</em> Multilevel <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span>
 				</a>
@@ -122,7 +136,9 @@
 			<li><a href="/login"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
 		</ul>
 	</div><!--/.sidebar-->
-		
+{% endblock %}
+
+{% block content %}
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 		<div class="row">
 			<ol class="breadcrumb">
@@ -490,7 +506,9 @@
 			</div>
 		</div><!--/.row-->
 	</div>	<!--/.main-->
-	
+{% endblock %}
+
+{% block footer %}
 	<script src="/static/js/jquery-1.11.1.min.js"></script>
 	<script src="/static/js/bootstrap.min.js"></script>
 	<script src="/static/js/chart.min.js"></script>
@@ -499,16 +517,18 @@
 	<script src="/static/js/easypiechart-data.js"></script>
 	<script src="/static/js/bootstrap-datepicker.js"></script>
 	<script src="/static/js/custom.js"></script>
+{% endblock %}
+
 	<script>
-		window.onload = function () {
-	var chart1 = document.getElementById("line-chart").getContext("2d");
-	window.myLine = new Chart(chart1).Line(lineChartData, {
-	responsive: true,
-	scaleLineColor: "rgba(0,0,0,.2)",
-	scaleGridLineColor: "rgba(0,0,0,.05)",
-	scaleFontColor: "#c5c7cc"
-	});
-};
+	window.onload = function () {
+		var chart1 = document.getElementById("line-chart").getContext("2d");
+		window.myLine = new Chart(chart1).Line(lineChartData, {
+			responsive: true,
+			scaleLineColor: "rgba(0,0,0,.2)",
+			scaleGridLineColor: "rgba(0,0,0,.05)",
+			scaleFontColor: "#c5c7cc"
+		});
+	};
 	</script>
 		
 </body>
