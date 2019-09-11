@@ -9,6 +9,7 @@
 	<link href="/static/css/font-awesome.min.css" rel="stylesheet">
 	<link href="/static/css/datepicker3.css" rel="stylesheet">
 	<link href="/static/css/styles.css" rel="stylesheet">
+	<script type="text/javascript" src="/static/js/jquery-1.11.1.min.js"></script>
 	
 	<!--Custom Font-->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -28,7 +29,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span></button>
-				<a class="navbar-brand" href="#"><span>BC</span>Admin</a>
+				<a class="navbar-brand" href="#"><span>Lumino</span>Admin</a>
 				<ul class="nav navbar-top-links navbar-right">
 					<li class="dropdown"><a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
 						<em class="fa fa-envelope"></em><span class="label label-danger">15</span>
@@ -506,19 +507,6 @@
 			</div>
 		</div><!--/.row-->
 	</div>	<!--/.main-->
-{% endblock %}
-
-{% block footer %}
-	<script src="/static/js/jquery-1.11.1.min.js"></script>
-	<script src="/static/js/bootstrap.min.js"></script>
-	<script src="/static/js/chart.min.js"></script>
-	<script src="/static/js/chart-data.js"></script>
-	<script src="/static/js/easypiechart.js"></script>
-	<script src="/static/js/easypiechart-data.js"></script>
-	<script src="/static/js/bootstrap-datepicker.js"></script>
-	<script src="/static/js/custom.js"></script>
-{% endblock %}
-{% block script %}
 	<script>
 	window.onload = function () {
 		var chart1 = document.getElementById("line-chart").getContext("2d");
@@ -530,6 +518,17 @@
 		});
 	};
 	</script>
+{% endblock %}
+
+{% block footer %}
+	<script src="/static/js/bootstrap.min.js"></script>
+	<script src="/static/js/chart.min.js"></script>
+	<script src="/static/js/chart-data.js"></script>
+	<script src="/static/js/easypiechart.js"></script>
+	<script src="/static/js/easypiechart-data.js"></script>
+	<script src="/static/js/bootstrap-datepicker.js"></script>
+	<script src="/static/js/custom.js"></script>
+
 {% endblock %}
 </body>
 </html>

@@ -127,32 +127,39 @@
 					<div class="panel-body">
 						<div class="col-md-12 no-padding">
 							<div class="row progress-labels">
-								<div class="col-sm-6">New Orders</div>
-								<div class="col-sm-6" style="text-align: right;">80%</div>
+								<div class="col-sm-6">CPU Percent</div>
+								<input type="hidden" id="cpu_percent" onclick="load()">
+								<div id="cpu_percent_value" class="col-sm-6" style="text-align: right;"></div>
 							</div>
 							<div class="progress">
-								<div data-percentage="0%" style="width: 80%;" class="progress-bar progress-bar-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+								<div id="cpu_percent_progress" data-percentage="0%" class="progress-bar progress-bar-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
 							</div>
+
 							<div class="row progress-labels">
-								<div class="col-sm-6">Comments</div>
-								<div class="col-sm-6" style="text-align: right;">60%</div>
+								<div class="col-sm-6">Memory Percent</div>
+								<input type="hidden" id="memory_percent" onclick="load()">
+								<div id="memory_percent_value" class="col-sm-6" style="text-align: right;"></div>
 							</div>
 							<div class="progress">
-								<div data-percentage="0%" style="width: 60%;" class="progress-bar progress-bar-orange" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+								<div id="memory_percent_progress" data-percentage="0%" class="progress-bar progress-bar-orange" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
 							</div>
+
 							<div class="row progress-labels">
-								<div class="col-sm-6">New Users</div>
-								<div class="col-sm-6" style="text-align: right;">40%</div>
+								<div class="col-sm-6">Receive Speed</div>
+								<input type="hidden" id="recv_speed" onclick="load()">
+								<div id="recv_speed_value" class="col-sm-6" style="text-align: right;"></div>
 							</div>
 							<div class="progress">
-								<div data-percentage="0%" style="width: 40%;" class="progress-bar progress-bar-teal" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+								<div id="recv_speed_progress" data-percentage="0%" class="progress-bar progress-bar-teal" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
 							</div>
+
 							<div class="row progress-labels">
-								<div class="col-sm-6">Page Views</div>
-								<div class="col-sm-6" style="text-align: right;">20%</div>
+								<div class="col-sm-6">Battery Level</div>
+								<input type="hidden" id="battery_status" onclick="load()">
+								<div id="battery_status_value" class="col-sm-6" style="text-align: right;"></div>
 							</div>
 							<div class="progress">
-								<div data-percentage="0%" style="width: 20%;" class="progress-bar progress-bar-red" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+								<div id="battery_status_progress" data-percentage="0%" class="progress-bar progress-bar-red" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
 							</div>
 						</div>
 					</div>
@@ -479,5 +486,8 @@
 			</div>
 		</div><!--/.row-->
 	</div>	<!--/.main-->
+
+	<script src="/static/js/system-status.js"></script>
 {% endblock %}
+
 </body>
