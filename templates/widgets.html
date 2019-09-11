@@ -96,10 +96,10 @@
 						</div><!--End .article-->
 					</div>
 				</div><!--End .articles-->
-				
+<!-- System Status ----------------------------------------------------------------------------------------------->
 				<div class="panel panel-default ">
 					<div class="panel-heading">
-						Progress bars
+						System Status
 						<ul class="pull-right panel-settings panel-button-tab-right">
 							<li class="dropdown"><a class="pull-right dropdown-toggle" data-toggle="dropdown" href="#">
 								<em class="fa fa-cogs"></em>
@@ -126,44 +126,51 @@
 						<span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
 					<div class="panel-body">
 						<div class="col-md-12 no-padding">
+							<input type="hidden" id="system_status" onclick="load()">
+							<!-- cpu -->
 							<div class="row progress-labels">
 								<div class="col-sm-6">CPU Percent</div>
-								<input type="hidden" id="cpu_percent" onclick="load()">
-								<div id="cpu_percent_value" class="col-sm-6" style="text-align: right;"></div>
+								<div id="cpu_percent_value" class="col-sm-6" style="text-align: right;">{{info_map.cpu_percent}} %</div>
 							</div>
 							<div class="progress">
-								<div id="cpu_percent_progress" data-percentage="0%" class="progress-bar progress-bar-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+								<div id="cpu_percent_progress" data-percentage="0%" style="width: {{info_map.cpu_percent}}%" class="progress-bar progress-bar-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
 							</div>
-
+							<!-- memory -->
 							<div class="row progress-labels">
 								<div class="col-sm-6">Memory Percent</div>
-								<input type="hidden" id="memory_percent" onclick="load()">
-								<div id="memory_percent_value" class="col-sm-6" style="text-align: right;"></div>
+								<div id="memory_percent_value" class="col-sm-6" style="text-align: right;">{{info_map.memory_percent}} %</div>
 							</div>
 							<div class="progress">
-								<div id="memory_percent_progress" data-percentage="0%" class="progress-bar progress-bar-orange" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+								<div id="memory_percent_progress" data-percentage="0%" style="width: {{info_map.memory_percent}}%" class="progress-bar progress-bar-orange" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
 							</div>
-
+							<!-- receive -->
 							<div class="row progress-labels">
 								<div class="col-sm-6">Receive Speed</div>
-								<input type="hidden" id="recv_speed" onclick="load()">
-								<div id="recv_speed_value" class="col-sm-6" style="text-align: right;"></div>
+								<div id="recv_speed_value" class="col-sm-6" style="text-align: right;">{{info_map.receive_speed}} Mbps</div>
 							</div>
 							<div class="progress">
-								<div id="recv_speed_progress" data-percentage="0%" class="progress-bar progress-bar-teal" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+								<div id="recv_speed_progress" data-percentage="0%" style="width: {{info_map.receive_rate}}%" class="progress-bar progress-bar-teal" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
 							</div>
-
+							<!-- sent -->
+							<div class="row progress-labels">
+								<div class="col-sm-6">Sent Speed</div>
+								<div id="sent_speed_value" class="col-sm-6" style="text-align: right;">{{info_map.sent_speed}} Mbps</div>
+							</div>
+							<div class="progress">
+								<div id="sent_speed_progress" data-percentage="0%" style="width: {{info_map.sent_rate}}%" class="progress-bar progress-bar-success" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+							<!-- battery -->
 							<div class="row progress-labels">
 								<div class="col-sm-6">Battery Level</div>
-								<input type="hidden" id="battery_status" onclick="load()">
-								<div id="battery_status_value" class="col-sm-6" style="text-align: right;"></div>
+								<div id="battery_status_value" class="col-sm-6" style="text-align: right;">{{info_map.battery_status}} %</div>
 							</div>
 							<div class="progress">
-								<div id="battery_status_progress" data-percentage="0%" class="progress-bar progress-bar-red" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+								<div id="battery_status_progress" data-percentage="0%" style="width: {{info_map.battery_status}}%" class="progress-bar progress-bar-red" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
 							</div>
 						</div>
 					</div>
 				</div>
+<!-- To-Do List ----------------------------------------------------------------------------------------------->
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						To-do List
@@ -193,57 +200,31 @@
 						<span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
 					<div class="panel-body">
 						<ul class="todo-list">
-							<li class="todo-list-item">
+							{% for item in to_do_list %}
+							<li class="todo-list-item" id="todo-{{item.index}}">
 								<div class="checkbox">
-									<input type="checkbox" id="checkbox-1" />
-									<label for="checkbox-1">Make coffee</label>
+									{% if item.status == 1 %}
+									<input type="checkbox" id="checkbox-{{item.index}}" onclick="update_to_do_status('checkbox-{{item.index}}')"/>
+									{% else %}
+									<input type="checkbox" id="checkbox-{{item.index}}" onclick="update_to_do_status('checkbox-{{item.index}}')" checked />
+									{% endif %}
+									<label for="checkbox-{{item.index}}">{{ item.item }}</label>
 								</div>
-								<div class="pull-right action-buttons"><a href="#" class="trash"><em class="fa fa-trash"></em></a></div>
+								<div class="pull-right action-buttons" onclick="delete_to_do_item('todo-{{item.index}}')"><a class="trash"><em class="fa fa-trash"></em></a></div>
 							</li>
-							<li class="todo-list-item">
-								<div class="checkbox">
-									<input type="checkbox" id="checkbox-2" />
-									<label for="checkbox-2">Check emails</label>
-								</div>
-								<div class="pull-right action-buttons"><a href="#" class="trash"><em class="fa fa-trash"></em></a></div>
-							</li>
-							<li class="todo-list-item">
-								<div class="checkbox">
-									<input type="checkbox" id="checkbox-3" />
-									<label for="checkbox-3">Reply to Jane</label>
-								</div>
-								<div class="pull-right action-buttons"><a href="#" class="trash"><em class="fa fa-trash"></em></a></div>
-							</li>
-							<li class="todo-list-item">
-								<div class="checkbox">
-									<input type="checkbox" id="checkbox-4" />
-									<label for="checkbox-4">Make more coffee</label>
-								</div>
-								<div class="pull-right action-buttons"><a href="#" class="trash"><em class="fa fa-trash"></em></a></div>
-							</li>
-							<li class="todo-list-item">
-								<div class="checkbox">
-									<input type="checkbox" id="checkbox-5" />
-									<label for="checkbox-5">Work on the new design</label>
-								</div>
-								<div class="pull-right action-buttons"><a href="#" class="trash"><em class="fa fa-trash"></em></a></div>
-							</li>
-							<li class="todo-list-item">
-								<div class="checkbox">
-									<input type="checkbox" id="checkbox-6" />
-									<label for="checkbox-6">Get feedback on design</label>
-								</div>
-								<div class="pull-right action-buttons"><a href="#" class="trash"><em class="fa fa-trash"></em></a></div>
-							</li>
+							{% endfor %}
 						</ul>
 					</div>
 					<div class="panel-footer">
 						<div class="input-group">
-							<input id="btn-input" type="text" class="form-control input-md" placeholder="Add new task" /><span class="input-group-btn">
-								<button class="btn btn-primary btn-md" id="btn-todo">Add</button>
-						</span></div>
+							<input id="todo-input" type="text" class="form-control input-md" placeholder="Add new task" />
+							<span class="input-group-btn">
+								<button class="btn btn-primary btn-md" id="btn-todo" onclick="insert_to_do_list('todo-input')">Add</button>
+							</span>
+						</div>
 					</div>
 				</div>
+<!-- Chat ----------------------------------------------------------------------------------------------->
 				<div class="panel panel-default chat">
 					<div class="panel-heading">
 						Chat
@@ -307,8 +288,9 @@
 					</div>
 				</div>
 			</div><!--/.col-->
-			
+
 			<div class="col-md-6">
+<!-- Calendar ----------------------------------------------------------------------------------------------->
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						Calendar
@@ -340,6 +322,7 @@
 						<div id="calendar"></div>
 					</div>
 				</div>
+<!-- Timeline ----------------------------------------------------------------------------------------------->
 				<div class="panel panel-default ">
 					<div class="panel-heading">
 						Timeline
@@ -416,6 +399,7 @@
 						</ul>
 					</div>
 				</div>
+<!-- Contact Form ----------------------------------------------------------------------------------------------->
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						Contact Form

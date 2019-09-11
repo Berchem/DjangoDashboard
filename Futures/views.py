@@ -11,11 +11,6 @@ def index(requests):
     return render(requests, 'index.html')
 
 
-def widgets(requests):
-    title = "Widgets"
-    return render(requests, 'widgets.html', locals())
-
-
 def charts(requests):
     title = "Charts"
     return render(requests, 'charts.html', locals())

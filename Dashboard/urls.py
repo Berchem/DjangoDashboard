@@ -21,7 +21,7 @@ urlpatterns = [
     url('admin/', admin.site.urls),
     url('^$', views.redirect),
     # url('^index/$', views.index),  # aka /
-    url('^widgets/$', views.widgets),
+    url('^widgets/', include('SystemUtil.urls')),
     url('^charts/$', views.charts),
     url('^elements/$', views.elements),
     url('^panels/$', views.panels),

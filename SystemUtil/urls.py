@@ -18,9 +18,10 @@ from django.conf.urls import url
 from SystemUtil import views
 
 urlpatterns = [
-    url(r'^cpu_percent$', views.get_cpu_percent),
-    url(r'^memory_percent$', views.get_memory_percent),
-    url(r'^recv_speed$', views.get_recv_speed),
-    url(r'^battery_status$', views.get_battery_level),
+    url('^$', views.widgets),
+    url(r'^status$', views.get_system_status),
+    url(r'^to_do/update/(?P<index>.+)$', views.update_to_do_status),
+    url(r'^to_do/delete/(?P<index>.+)$', views.delete_to_do_item),
+    url(r'^to_do/insert/(?P<item>.+)$', views.insert_to_do_list),
 
 ]
