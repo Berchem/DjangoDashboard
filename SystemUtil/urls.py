@@ -23,5 +23,7 @@ urlpatterns = [
     url(r'^to_do/update/(?P<index>.+)$', views.update_to_do_status),
     url(r'^to_do/delete/(?P<index>.+)$', views.delete_to_do_item),
     url(r'^to_do/insert/(?P<item>.+)$', views.insert_to_do_list),
+    url(r'^chat/insert/(?P<msg>.+)$', views.insert_message),
+    url(r'^chat/status$', views.get_chat_status),
 
 ]
