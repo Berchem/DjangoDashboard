@@ -20,11 +20,28 @@ $(document).ready(function(){
     })
 });
 
-function load(){
-    document.getElementById('system_status').click();
+$(document).ready(function(){
+    $('#chat_status').click(function(){
+        $.getJSON("./chat/status",function(ret){
+            $(".chat-list").empty()
+            for (var i = 0; i < ret.length; i++){
+                $(".chat-list").append(ret[i])
+            }
+        })
+//        $('.chat-list').slideToggle();
+        $('.panel-body').animate({
+//            scrollTop: $('.panel-body').height()
+            scrollTop: 10000
+        }, 100);
+    })
+});
+
+function load(id){
+    document.getElementById(id).click();
 }
 
-//setInterval("load()","6000");
+setInterval("load('system_status')","5000");
+setInterval("load('chat_status')","5000");
 
 function update_to_do_status(id){
     var index = id.split("-")[1]
@@ -45,6 +62,27 @@ function insert_to_do_list(id){
     $.get("./to_do/insert/" + todo_input.value, function(ret){
         $(".todo-list").append(ret["list_item"])
     })
+    todo_input.value = ""
 }
 
+// Execute a function when the user releases a key on the keyboard
+$("#todo-input").on('keypress',function(e) {
+  if (e.which == 13) {  // Number 13 is the "Enter" key on the keyboard
+    document.getElementById("btn-todo").click();
+  }
+});
 
+function insert_message(id){
+    new_msg = document.getElementById(id)
+    $.get("./chat/insert/" + new_msg.value, function(ret){
+        $(".chat-list").append(ret["list_item"])
+    })
+    new_msg.value = ""
+}
+
+// Execute a function when the user releases a key on the keyboard
+$("#chat-input").on('keypress',function(e) {
+  if (e.which == 13) {  // Number 13 is the "Enter" key on the keyboard
+    document.getElementById("btn-chat").click();
+  }
+});
