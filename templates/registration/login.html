@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Lumino - Login</title>
+	<link href="/static/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/static/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/static/css/datepicker3.css" rel="stylesheet">
+	<link href="/static/css/styles.css" rel="stylesheet">
+	<!--[if lt IE 9]>
+	<script src="/static/js/html5shiv.js"></script>
+	<script src="/static/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+	<div class="row">
+		<div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+			<div class="login-panel panel panel-default">
+				<div class="panel-heading">Log in
+<!--					<div class="pull-left">Log in</div>-->
+					<a class="pull-right" href="/"><em class="fa fa-home"></em></a>
+				</div>
+				<div class="panel-body">
+					<form role="form" method="post"> {%csrf_token%}
+						<fieldset>
+							<div class="form-group">
+								<input class="form-control" placeholder="Username" name="username" type="text" autofocus="">
+							</div>
+							<div class="form-group">
+								<input class="form-control" placeholder="Password" name="password" type="password" value="">
+							</div>
+							<div class="pull-left">
+								<button type="submit" class="btn btn-primary">Login</button>
+							</div>
+							<div class="pull-right">
+								<a id="go-back" onclick="go_previous('{{request.get_full_path}}')" class="btn btn-primary">Cancel</a>
+							</div>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+		</div><!-- /.col-->
+	</div><!-- /.row -->	
+	
+
+	<script src="/static/js/jquery-1.11.1.min.js"></script>
+	<script src="/static/js/bootstrap.min.js"></script>
+	<script>
+	    function go_previous(full_path){
+	        request_path = full_path.split("next=")[1]
+	        if (request_path == "/widgets/"){
+	            request_path = "/"
+	        }
+	        $("#go-back").attr("href", request_path).click()
+	    }
+    </script>
+</body>
+</html>

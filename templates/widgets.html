@@ -126,7 +126,7 @@
 						<span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
 					<div class="panel-body">
 						<div class="col-md-12 no-padding">
-							<input type="hidden" id="system_status" onclick="load()">
+							<input type="hidden" id="system_status" onclick="load('system_status')">
 							<!-- cpu -->
 							<div class="row progress-labels">
 								<div class="col-sm-6">CPU Percent</div>
@@ -203,11 +203,8 @@
 							{% for item in to_do_list %}
 							<li class="todo-list-item" id="todo-{{item.index}}">
 								<div class="checkbox">
-									{% if item.status == 1 %}
-									<input type="checkbox" id="checkbox-{{item.index}}" onclick="update_to_do_status('checkbox-{{item.index}}')"/>
-									{% else %}
-									<input type="checkbox" id="checkbox-{{item.index}}" onclick="update_to_do_status('checkbox-{{item.index}}')" checked />
-									{% endif %}
+									<input type="checkbox" id="checkbox-{{item.index}}" onclick="update_to_do_status('checkbox-{{item.index}}')"
+									{% if item.status == 0 %} checked {% endif %}/>
 									<label for="checkbox-{{item.index}}">{{ item.item }}</label>
 								</div>
 								<div class="pull-right action-buttons" onclick="delete_to_do_item('todo-{{item.index}}')"><a class="trash"><em class="fa fa-trash"></em></a></div>
@@ -253,37 +250,24 @@
 						</ul>
 						<span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
 					<div class="panel-body">
-						<ul>
-							<li class="left clearfix"><span class="chat-img pull-left">
+						<input type="hidden" id="chat_status" onclick="load('chat_status')">
+						<ul class="chat-list">
+							{% for chat in chat_records %}
+							<li class="{% if chat.user == user.get_username %} right {% else %} left {% endif %} clearfix"><span class="chat-img {% if chat.user == user.get_username %} pull-right {% else %} pull-left {% endif %}">
 								<img src="http://placehold.it/60/30a5ff/fff" alt="User Avatar" class="img-circle" />
 								</span>
 								<div class="chat-body clearfix">
-									<div class="header"><strong class="primary-font">John Doe</strong> <small class="text-muted">32 mins ago</small></div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ante turpis, rutrum ut ullamcorper sed, dapibus ac nunc.</p>
+									<div class="header"><strong class="{% if chat.user == user.get_username %} pull-left {% endif %} primary-font">{{chat.user}}</strong> <small class="text-muted">{{chat.timedelta}}</small></div>
+									<p>{{chat.msg}}</p>
 								</div>
 							</li>
-							<li class="right clearfix"><span class="chat-img pull-right">
-								<img src="http://placehold.it/60/dde0e6/5f6468" alt="User Avatar" class="img-circle" />
-								</span>
-								<div class="chat-body clearfix">
-									<div class="header"><strong class="pull-left primary-font">Jane Doe</strong> <small class="text-muted">6 mins ago</small></div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ante turpis, rutrum ut ullamcorper sed, dapibus ac nunc.</p>
-								</div>
-							</li>
-							<li class="left clearfix"><span class="chat-img pull-left">
-								<img src="http://placehold.it/60/30a5ff/fff" alt="User Avatar" class="img-circle" />
-								</span>
-								<div class="chat-body clearfix">
-									<div class="header"><strong class="primary-font">John Doe</strong> <small class="text-muted">32 mins ago</small></div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ante turpis, rutrum ut ullamcorper sed, dapibus ac nunc.</p>
-								</div>
-							</li>
+							{% endfor %}
 						</ul>
 					</div>
 					<div class="panel-footer">
 						<div class="input-group">
-							<input id="btn-input" type="text" class="form-control input-md" placeholder="Type your message here..." /><span class="input-group-btn">
-								<button class="btn btn-primary btn-md" id="btn-chat">Send</button>
+							<input id="chat-input" type="text" class="form-control input-md" placeholder="Type your message here..." /><span class="input-group-btn">
+								<button class="btn btn-primary btn-md" id="btn-chat" onclick="insert_message('chat-input')">Send</button>
 						</span></div>
 					</div>
 				</div>

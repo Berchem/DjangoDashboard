@@ -1,19 +1,25 @@
 import os
 import time
 import psutil
+import datetime as dt
 
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+
 from SystemUtil.models import ToDoList
+from SystemUtil.models import Chat
 
 max_receive_speed: float = 1e-6
 max_sent_speed: float = 1e-6
 
 
+@login_required
 def widgets(request):
     title = "Widgets"
     info_map = _system_status()
     to_do_list = ToDoList.objects.all()
+    chat_records = _chat_records()
     return render(request, 'widgets.html', locals())
 
 
@@ -35,7 +41,6 @@ def delete_to_do_item(request, index):
 def insert_to_do_list(request, item):
     ToDoList.objects.create(item=item, status=1)
     item = ToDoList.objects.filter(item=item).latest('index')
-    print(item.index, item.item, item.status)
     list_item = """
     <li class="todo-list-item" id="todo-{index}">
         <div class="checkbox">
@@ -45,6 +50,52 @@ def insert_to_do_list(request, item):
         <div class="pull-right action-buttons" onclick="delete_to_do_item('todo-{index}')"><a class="trash"><em class="fa fa-trash"></em></a></div>
     </li>""".format(index=item.index, item=item.item)
     return JsonResponse({"list_item": list_item})
+
+
+@login_required
+def insert_message(request, msg):
+    user = request.user
+    timestamp = dt.datetime.now()
+    time_string = timestamp.strftime("%Y%m%d%H%M%S")
+    Chat.objects.create(user=user, datetime=time_string, msg=msg)
+    chat_records = _chat_records()[-1]
+    list_item = """
+    <li class="{pos1} clearfix">
+        <span class="chat-img pull-{pos1}">
+            <img src="http://placehold.it/60/30a5ff/fff" alt="User Avatar" class="img-circle" />
+        </span>
+        <div class="chat-body clearfix">
+            <div class="header"><strong class="pull-{pos2} primary-font">{user}</strong> <small class="text-muted">{timedelta}</small></div>
+            <p>{msg}</p>
+        </div>
+    </li>
+    """.format(user=chat_records["user"], timedelta=chat_records["timedelta"], msg=chat_records["msg"],
+               pos2="right" if chat_records["user"] == user else "left",
+               pos1="left" if chat_records["user"] == user else "right")
+    return JsonResponse({"list_item": list_item}, safe=False)
+
+
+def get_chat_status(request):
+    chats = _chat_records()
+    user = request.user
+    text = """
+    <li class="{pos1} clearfix">
+        <span class="chat-img pull-{pos1}">
+            <img src="http://placehold.it/60/30a5ff/fff" alt="User Avatar" class="img-circle" />
+        </span>
+        <div class="chat-body clearfix">
+            <div class="header"><strong class="pull-{pos2} primary-font">{user}</strong> <small class="text-muted">{timedelta}</small></div>
+            <p>{msg}</p>
+        </div>
+    </li>
+    """
+    data = []
+    for i, chat in enumerate(chats):
+        item = text.format(user=chat["user"], timedelta=chat["timedelta"], msg=chat["msg"],
+                           pos2="right" if chat["user"] == user else "left",
+                           pos1="left" if chat["user"] == user else "right")
+        data += [item]
+    return JsonResponse(data, safe=False)
 
 
 def get_system_status(request):
@@ -93,3 +144,42 @@ def _system_status():
                 "battery_status": battery_percent,
                 "battery_low": battery_low}
     return info_map
+
+
+def _chat_records():
+    chat_obj = Chat.objects.all()
+    chat_records = []
+    for chat in chat_obj:
+        chat_records += [
+            {
+                "user": chat.user,
+                "timedelta": _get_time_delta(chat.datetime) + " ago",
+                "msg": chat.msg
+            }
+        ]
+    return chat_records
+
+
+def _get_time_delta(time_string):
+    timestamp = dt.datetime.now()
+    time_record = dt.datetime.strptime(time_string, "%Y%m%d%H%M%S")
+    timedelta = timestamp - time_record
+    if timedelta.days == 0:
+        total_seconds = timedelta.total_seconds()
+        secs = total_seconds % 60
+        mins = total_seconds // 60 % 60
+        hrs = total_seconds // 60 // 60
+        if hrs == 0:
+            if mins == 0:
+                delta = "%d secs" % secs
+
+            else:
+                delta = "%d mins" % mins
+
+        else:
+            delta = "%d hours" % hrs
+
+    else:
+        delta = "%d days" % timedelta.days
+
+    return delta
