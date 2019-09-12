@@ -37,7 +37,7 @@ def insert_to_do_list(request, item):
     item = ToDoList.objects.filter(item=item).latest('index')
     print(item.index, item.item, item.status)
     list_item = """
-    <li class="todo-list-item" id="todo-{{item.index}}">
+    <li class="todo-list-item" id="todo-{index}">
         <div class="checkbox">
             <input type="checkbox" id="checkbox-{index}" onclick="update_to_do_status('checkbox-{index}')"/>
             <label for="checkbox-{index}">{item}</label>
