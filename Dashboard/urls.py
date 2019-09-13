@@ -24,6 +24,8 @@ urlpatterns = [
     # url('^login/$', views.login),
     url(r'^accounts/login/$', auth_views.login, name='login'),
     url(r'^accounts/logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
+    url(r'^accounts/signup/$', auth_views.logout, {'next_page': '/'}, name='logout'),
+
 
     url('^$', views.redirect),
     # url('^index/$', views.index),  # aka /

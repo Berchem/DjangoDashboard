@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $('#system_status').on("click", function(){
-        $.getJSON("./system/status",function(ret){
+        $.getJSON("/widgets/system/status", function(ret){
             // cpu
             document.getElementById('cpu_percent_value').innerHTML =  ret["cpu_percent"] + " %";
         	document.getElementById('cpu_percent_progress').style.width = ret["cpu_percent"] + "%";
@@ -23,5 +23,3 @@ $(document).ready(function(){
 function load(id){
     document.getElementById(id).click();
 }
-
-setInterval("load('system_status')","2500");

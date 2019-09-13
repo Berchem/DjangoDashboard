@@ -18,7 +18,7 @@ max_sent_speed: float = 1e-6
 def widgets(request):
     title = "Widgets"
     info_map = _system_status()
-    to_do_list = ToDoList.objects.all()
+    to_do_list = get_to_do_list(request)
     chat_records = _chat_records()
     return render(request, 'widgets.html', locals())
 
@@ -74,6 +74,17 @@ def insert_message(request, msg):
                pos2="left" if chat_records["user"] == user.username else "")
     print(chat_records["user"], user)
     return JsonResponse({"list_item": list_item}, safe=False)
+
+
+def get_to_do_list(request):
+    if request.user.username == "admin":
+        to_do_list = ToDoList.objects.all()
+
+    else:
+        to_do_list = ToDoList.objects.filter(
+            user__exact=request.user.username) | ToDoList.objects.filter(user__exact=None)
+
+    return to_do_list
 
 
 def get_chat_status(request):

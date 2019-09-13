@@ -1,20 +1,20 @@
 function update_to_do_status(id){
     var index = id.split("-")[1]
-    $.get("./to_do/update/" + index, function(ret){
+    $.get("/widgets/to_do/update/" + index, function(ret){
         document.getElementById(id).checked = (ret["status"] == 1) ? false : true
     })
 }
 
 function delete_to_do_item(id){
     var index = id.split("-")[1]
-    $.get("./to_do/delete/" + index, function(ret){
+    $.get("/widgets/to_do/delete/" + index, function(ret){
         document.getElementById(id).style.display = ret["display"]
     })
 }
 
 function insert_to_do_list(id){
     todo_input = document.getElementById(id)
-    $.get("./to_do/insert/" + todo_input.value, function(ret){
+    $.get("/widgets/to_do/insert/" + todo_input.value, function(ret){
         $(".todo-list").append(ret["list_item"])
     })
     todo_input.value = ""

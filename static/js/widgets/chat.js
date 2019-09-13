@@ -43,4 +43,4 @@ $(document).ready(function(){
     })
 })
 
-setInterval("load('chat_status')","5000");
+$('.panel-body').animate({scrollTop: $('.chat-list').height()}, 100);

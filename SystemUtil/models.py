@@ -144,6 +144,7 @@ class ToDoList(models.Model):
     index = models.IntegerField(primary_key=True)
     item = models.TextField(blank=False, null=False)
     status = models.IntegerField(blank=False, null=False)
+    user = models.TextField(blank=True, null=True)
 
     class Meta:
         managed = False
