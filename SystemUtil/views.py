@@ -70,8 +70,9 @@ def insert_message(request, msg):
         </div>
     </li>
     """.format(user=chat_records["user"], timedelta=chat_records["timedelta"], msg=chat_records["msg"],
-               pos2="right" if chat_records["user"] == user else "left",
-               pos1="left" if chat_records["user"] == user else "right")
+               pos1="right" if chat_records["user"] == user.username else "left",
+               pos2="left" if chat_records["user"] == user.username else "")
+    print(chat_records["user"], user)
     return JsonResponse({"list_item": list_item}, safe=False)
 
 
@@ -92,8 +93,8 @@ def get_chat_status(request):
     data = []
     for i, chat in enumerate(chats):
         item = text.format(user=chat["user"], timedelta=chat["timedelta"], msg=chat["msg"],
-                           pos2="right" if chat["user"] == user else "left",
-                           pos1="left" if chat["user"] == user else "right")
+                           pos1="right" if chat["user"] == user.username else "left",
+                           pos2="left" if chat["user"] == user.username else "")
         data += [item]
     return JsonResponse(data, safe=False)
 

@@ -225,36 +225,37 @@
 				<div class="panel panel-default chat">
 					<div class="panel-heading">
 						Chat
-						<ul class="pull-right panel-settings panel-button-tab-right">
-							<li class="dropdown"><a class="pull-right dropdown-toggle" data-toggle="dropdown" href="#">
-								<em class="fa fa-cogs"></em>
-							</a>
-								<ul class="dropdown-menu dropdown-menu-right">
-									<li>
-										<ul class="dropdown-settings">
-											<li><a href="#">
-												<em class="fa fa-cog"></em> Settings 1
-											</a></li>
-											<li class="divider"></li>
-											<li><a href="#">
-												<em class="fa fa-cog"></em> Settings 2
-											</a></li>
-											<li class="divider"></li>
-											<li><a href="#">
-												<em class="fa fa-cog"></em> Settings 3
-											</a></li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-						</ul>
+<!--						<ul class="pull-right panel-settings panel-button-tab-right">-->
+<!--							<li class="dropdown"><a class="pull-right dropdown-toggle" data-toggle="dropdown" href="#">-->
+<!--								<em class="fa fa-cogs"></em>-->
+<!--							</a>-->
+<!--								<ul class="dropdown-menu dropdown-menu-right">-->
+<!--									<li>-->
+<!--										<ul class="dropdown-settings">-->
+<!--											<li><a href="#">-->
+<!--												<em class="fa fa-cog"></em> Settings 1-->
+<!--											</a></li>-->
+<!--											<li class="divider"></li>-->
+<!--											<li><a href="#">-->
+<!--												<em class="fa fa-cog"></em> Settings 2-->
+<!--											</a></li>-->
+<!--											<li class="divider"></li>-->
+<!--											<li><a href="#">-->
+<!--												<em class="fa fa-cog"></em> Settings 3-->
+<!--											</a></li>-->
+<!--										</ul>-->
+<!--									</li>-->
+<!--								</ul>-->
+<!--							</li>-->
+<!--						</ul>-->
 						<span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
 					<div class="panel-body">
 						<input type="hidden" id="chat_status" onclick="load('chat_status')">
 						<ul class="chat-list">
 							{% for chat in chat_records %}
-							<li class="{% if chat.user == user.get_username %} right {% else %} left {% endif %} clearfix"><span class="chat-img {% if chat.user == user.get_username %} pull-right {% else %} pull-left {% endif %}">
-								<img src="http://placehold.it/60/30a5ff/fff" alt="User Avatar" class="img-circle" />
+							<li class="{% if chat.user == user.get_username %} right {% else %} left {% endif %} clearfix">
+								<span class="chat-img {% if chat.user == user.get_username %} pull-right {% else %} pull-left {% endif %}">
+									<img src="http://placehold.it/60/30a5ff/fff" alt="User Avatar" class="img-circle" />
 								</span>
 								<div class="chat-body clearfix">
 									<div class="header"><strong class="{% if chat.user == user.get_username %} pull-left {% endif %} primary-font">{{chat.user}}</strong> <small class="text-muted">{{chat.timedelta}}</small></div>
@@ -265,7 +266,7 @@
 						</ul>
 					</div>
 					<div class="panel-footer">
-						<div class="input-group">
+						<div class="input-group" id="chat-input-group">
 							<input id="chat-input" type="text" class="form-control input-md" placeholder="Type your message here..." /><span class="input-group-btn">
 								<button class="btn btn-primary btn-md" id="btn-chat" onclick="insert_message('chat-input')">Send</button>
 						</span></div>
@@ -455,7 +456,9 @@
 		</div><!--/.row-->
 	</div>	<!--/.main-->
 
-	<script src="/static/js/system-status.js"></script>
+	<script src="/static/js/widgets/system-status.js"></script>
+	<script src="/static/js/widgets/to-do-list.js"></script>
+	<script src="/static/js/widgets/chat.js"></script>
 {% endblock %}
 
 </body>
