@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -24,8 +25,3 @@ def elements(requests):
 def panels(requests):
     title = "Panels"
     return render(requests, 'panels.html', locals())
-
-
-def login(requests):
-    return render(requests, 'login.html')
-
