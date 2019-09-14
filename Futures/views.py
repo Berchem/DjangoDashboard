@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 
-from SystemUtil.views import get_to_do_list
+from Widgets.views import get_to_do_list
 
 
 # Create your views here.

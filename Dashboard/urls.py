@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.conf.urls import url, include
 from Futures import views
+from Registration import views as sign_views
 
 urlpatterns = [
     url('admin/', admin.site.urls),
@@ -24,13 +25,13 @@ urlpatterns = [
     # url('^login/$', views.login),
     url(r'^accounts/login/$', auth_views.login, name='login'),
     url(r'^accounts/logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
-    url(r'^accounts/signup/$', auth_views.logout, {'next_page': '/'}, name='logout'),
+    url(r'^accounts/signup/$', sign_views.signup, name='signup'),
 
 
     url('^$', views.redirect),
     # url('^index/$', views.index),  # aka /
 
-    url('^widgets/', include('SystemUtil.urls')),
+    url('^widgets/', include('Widgets.urls')),
 
     url('^charts/$', views.charts),
     url('^elements/$', views.elements),
