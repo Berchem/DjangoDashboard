@@ -7,8 +7,8 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 
-from SystemUtil.models import ToDoList
-from SystemUtil.models import Chat
+from Widgets.models import ToDoList
+from Widgets.models import Chat
 
 max_receive_speed: float = 1e-6
 max_sent_speed: float = 1e-6
@@ -39,7 +39,7 @@ def delete_to_do_item(request, index):
 
 
 def insert_to_do_list(request, item):
-    ToDoList.objects.create(item=item, status=1)
+    ToDoList.objects.create(item=item, status=1, user=request.user.username)
     item = ToDoList.objects.filter(item=item).latest('index')
     list_item = """
     <li class="todo-list-item" id="todo-{index}">
@@ -57,7 +57,7 @@ def insert_message(request, msg):
     user = request.user
     timestamp = dt.datetime.now()
     time_string = timestamp.strftime("%Y%m%d%H%M%S")
-    Chat.objects.create(user=user, datetime=time_string, msg=msg)
+    Chat.objects.create(user=user.username, datetime=time_string, msg=msg)
     chat_records = _chat_records()[-1]
     list_item = """
     <li class="{pos1} clearfix">
@@ -82,7 +82,7 @@ def get_to_do_list(request):
 
     else:
         to_do_list = ToDoList.objects.filter(
-            user__exact=request.user.username) | ToDoList.objects.filter(user__exact=None)
+            user__exact=request.user.username) | ToDoList.objects.filter(user__exact="")
 
     return to_do_list
 

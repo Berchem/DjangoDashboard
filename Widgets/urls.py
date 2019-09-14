@@ -15,7 +15,7 @@ Including another URLconf
 """
 
 from django.conf.urls import url
-from SystemUtil import views
+from Widgets import views
 
 urlpatterns = [
     url('^$', views.widgets),
