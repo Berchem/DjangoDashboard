@@ -23,3 +23,15 @@ $(document).ready(function(){
 function load(id){
     document.getElementById(id).click();
 }
+
+$('#sys_1s').on("click", function(){
+    system_status_update_period = "1000"
+})
+
+$('#sys_2s').on("click", function(){
+    system_status_update_period = "2000"
+})
+
+$('#sys_3s').on("click", function(){
+    system_status_update_period = "3000"
+})
