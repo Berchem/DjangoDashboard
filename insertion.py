@@ -28,3 +28,13 @@ cursor.executemany("insert into capital_futures_corp (bank, code, prefix) values
 conn.commit()
 conn.close()
 	
+'''
+CREATE TABLE "capital_account" (
+	"index"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	"user"	varchar(128) NOT NULL,
+	"account"	varchar(7) NOT NULL,
+	"id_number"	varchar(10) NOT NULL,
+	"password"	varchar(128) NOT NULL,
+	"desposit_account" varchar(16) NOT NULL
+);
+'''
