@@ -17,10 +17,6 @@
 			</div>
 		</div><!--/.row-->
 
-		{% for key, val in capital_account.items %}
-		{{key}}: {{val}}
-		{% endfor %}
-
 		<div class="row">
 			<div class="col-lg-12">
 <!-- button ------------------------------------------------------------------->
@@ -68,22 +64,55 @@
 					<div class="panel-body">
 						<div class="col-md-6">
 							<form role="form" method="post" action="/conf/test/">{%csrf_token%}
-								<div class="form-group">
+								<div class="form-group has-error">
 									<label>Capital Account</label>
-									<input class="form-control" name="capital_account" placeholder="Enter your capital account" value="{{capital.account}}">
+									<input id="capital_account" class="form-control" name="capital_account" placeholder="Enter your capital account" value="{{capital.account}}">
 								</div>
 								<div class="form-group">
 									<label>Capital Password</label>
-									<input type="password" name="capital_password" class="form-control" placeholder="Enter your capital password" value="{{capital.password}}">
+									<input type="password" name="capital_password" class="form-control pull-left" placeholder="Enter your capital password" value="{{capital.password}}">
 								</div>
 								<div class="form-group">
 									<label>ID Card Number</label>
 									<input type="password" name="id_number" class="form-control" placeholder="Enter your ID card number" value="{{capital.id_number}}">
 								</div>
-								<div class="form-group">
+								<div class="form-group has-warning">
 									<label>Deposit Account</label>
-									<input name="deposit_account" class="form-control" placeholder="Enter your deposit account" value="{{capital.deposit_account}}">
+									<div class="row">
+									<p class="col-md-3">
+										<input name="deposit_code" class="form-control" placeholder="Enter the code of deposit account" value="{{capital.deposit_code}}">
+									</p>
+									<p class="col-md-9">
+										<input name="deposit_account" class="form-control" placeholder="Enter your deposit account" value="{{capital.deposit_account}}">
+									</p>
+									</div>
 								</div>
+								<div class="form-group has-success">
+									<label>Margin Account</label>
+									<span id="margin_account" class="right"></span>
+									<select id="margin_bank" class="form-control" name="margin_account">
+										{% for margin_account in margin_accounts %}
+										<option value="{{margin_account.code}}_{{margin_account.prefix}}" {% if margin_account.code == capital.deposit_code %} selected {% endif %}>
+											({{margin_account.code}}) {{margin_account.bank}}
+										</option>
+										{% endfor %}
+									</select>
+								</div>
+
+								<script>
+									function preview_account(){
+									    account = $("#capital_account").val()
+									    code_prefix = $("#margin_bank").find(":selected").val().split("_")
+									    account = "(" + code_prefix[0] + ") " + code_prefix[1] + " - "+ account
+									    $("#margin_account").text(account)
+									}
+
+									preview_account()
+
+									$("#margin_bank").bind("change select", function(){
+										preview_account()
+									})
+								</script>
 
 								<div class="form-group">
 									<label>File input</label>
@@ -94,18 +123,6 @@
 									<label>Text area</label>
 									<textarea class="form-control" rows="3"></textarea>
 								</div>
-								<label>Validation</label>
-								<div class="form-group has-success">
-									<input class="form-control" placeholder="Success">
-								</div>
-								<div class="form-group has-warning">
-									<input class="form-control" placeholder="Warning">
-								</div>
-								<div class="form-group has-error">
-									<input class="form-control" placeholder="Error">
-								</div>
-<!--								<button>submit</button>-->
-<!--							</form>-->
 						</div>
 <!--						<div class="col-md-6">-->
 <!--							<form role="form" method="get" action="/conf/test/">{%csrf_token%}-->
@@ -156,16 +173,7 @@
 											</label>
 										</div>
 									</div>
-									<div class="form-group">
-										<label>Selects</label>
-										<select class="form-control" name="margin_account">
-											{% for margin_account in margin_accounts %}
-											<option value="{{margin_account.code}}_{{margin_account.prefix}}">
-												{{margin_account.bank}}
-											</option>
-											{% endfor %}
-										</select>
-									</div>
+
 									<div class="form-group">
 										<label>Multiple Selects</label>
 										<select multiple class="form-control">

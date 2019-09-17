@@ -26,7 +26,7 @@ urlpatterns = [
     url(r'^accounts/login/$', auth_views.login, name='login'),
     url(r'^accounts/logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
     url(r'^accounts/signup/$', sign_views.signup, name='signup'),
-    url(r'^accounts/capital/$', sign_views.capital_account, name='capital'),
+    # url(r'^accounts/capital/$', sign_views.capital_account, name='capital'),
 
 
     url('^$', views.redirect),

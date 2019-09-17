@@ -33,7 +33,8 @@ def update_capital_account(request):
     capital.account = request.POST["capital_account"]
     capital.password = request.POST["capital_password"]
     capital.id_number = request.POST["id_number"].upper()
-    capital.deposit_account = request.POST["deposit_account"]
+    capital.deposit_code = request.POST["deposit_code"]
+    capital.deposit_account = request.POST["deposit_account"].zfill(16)
     capital.save()
 
 

@@ -7,6 +7,7 @@ class CapitalAccount(models.Model):
     account = models.TextField(max_length=7)
     id_number = models.CharField(max_length=10)
     password = models.CharField(max_length=128)
+    deposit_code = models.CharField(max_length=3)
     deposit_account = models.CharField(max_length=16)
 
     class Meta:
