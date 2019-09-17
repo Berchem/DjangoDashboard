@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'Futures',
     'Widgets',
     'Registration',
+    'Configurations',
 ]
 
 MIDDLEWARE_CLASSES = [
