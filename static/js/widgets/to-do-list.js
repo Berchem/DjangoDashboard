@@ -26,3 +26,27 @@ $("#todo-input").on('keypress',function(e) {
     document.getElementById("btn-todo").click();
   }
 });
+
+function show_todo_list(){
+    $(".todo-list-item").filter(function(i, item){
+        return true
+    }).show()
+}
+
+$("#todo-all").on("click", function(){
+    show_todo_list()
+})
+
+$("#todo-complete").on("click", function(){
+    show_todo_list()
+    $(".todo-list-item").filter(function(i, item){
+        return $(item).attr("status") != "0"
+    }).css("display", "none")
+})
+
+$("#todo-incomplete").on("click", function(){
+    show_todo_list()
+    $(".todo-list-item").filter(function(i, item){
+        return $(item).attr("status") != "1"
+    }).hide()
+})
