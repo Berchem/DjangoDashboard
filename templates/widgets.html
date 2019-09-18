@@ -181,16 +181,16 @@
 								<ul class="dropdown-menu dropdown-menu-right">
 									<li>
 										<ul class="dropdown-settings">
-											<li><a href="#">
-												<em class="fa fa-cog"></em> Settings 1
+											<li id="todo-all"><a href="#todo-list">
+												<em class="fa fa-cog"></em> All
 											</a></li>
 											<li class="divider"></li>
-											<li><a href="#">
-												<em class="fa fa-cog"></em> Settings 2
+											<li id="todo-complete"><a href="#todo-list">
+												<em class="fa fa-cog"></em> Complete
 											</a></li>
 											<li class="divider"></li>
-											<li><a href="#">
-												<em class="fa fa-cog"></em> Settings 3
+											<li id="todo-incomplete"><a href="#todo-list">
+												<em class="fa fa-cog"></em> Incomplete
 											</a></li>
 										</ul>
 									</li>
@@ -199,12 +199,12 @@
 						</ul>
 						<span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
 					<div class="panel-body">
-						<ul class="todo-list">
+						<ul class="todo-list" id="todo-list">
 							{% for item in to_do_list %}
-							<li class="todo-list-item" id="todo-{{item.index}}">
+							<li class="todo-list-item" id="todo-{{item.index}}" status="{{item.status}}">
 								<div class="checkbox">
 									<input type="checkbox" id="checkbox-{{item.index}}" onclick="update_to_do_status('checkbox-{{item.index}}')"
-									{% if item.status == 0 %} checked {% endif %}/>
+										   {% if item.status == 0 %} checked {% endif %}/>
 									<label for="checkbox-{{item.index}}">{{ item.item }}</label>
 								</div>
 								<div class="pull-right action-buttons" onclick="delete_to_do_item('todo-{{item.index}}')"><a class="trash"><em class="fa fa-trash"></em></a></div>
@@ -459,6 +459,7 @@
 	<script src="/static/js/widgets/system-status.js"></script>
 	<script src="/static/js/widgets/to-do-list.js"></script>
 	<script src="/static/js/widgets/chat.js"></script>
+	<script src="/static/js/widgets/calendar.js"></script>
 	<script src="/static/js/widgets/widgets.js"></script>
 {% endblock %}
 

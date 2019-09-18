@@ -8,7 +8,6 @@ from Configurations.models import CapitalAccount
 from Configurations.models import CapitalFuturesCorp
 
 
-
 @login_required
 @staff_member_required
 def configs(request):
@@ -36,7 +35,3 @@ def update_capital_account(request):
     capital.deposit_code = request.POST["deposit_code"]
     capital.deposit_account = request.POST["deposit_account"].zfill(16)
     capital.save()
-
-
-
-

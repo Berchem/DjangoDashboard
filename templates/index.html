@@ -114,7 +114,7 @@
 			{% if title == "Widgets" %} <li class="active"> {% else %} <li> {% endif %}
 				<a href="/widgets"><em class="fa fa-calendar">&nbsp;</em> Widgets</a></li>
 			{% if title == "Charts" %} <li class="active"> {% else %} <li> {% endif %}
-				<a href="/charts"><em class="fa fa-bar-chart">&nbsp;</em> Charts</a></li>
+				<a href="/futures"><em class="fa fa-bar-chart">&nbsp;</em> Futures</a></li>
 			{% if title == "Configurations" %} <li class="active"> {% else %} <li> {% endif %}
 				<a href="/conf"><em class="fa fa-toggle-off">&nbsp;</em> Config</a></li>
 			{% if title == "Panels" %} <li class="active"> {% else %} <li> {% endif %}
@@ -142,9 +142,6 @@
 				<ul class="children collapse" id="backend-list">
 					<li><a class="" href="/admin">
 						<span class="fa fa-cube">&nbsp;</span> Administration
-					</a></li>
-					<li><a class="" href="#">
-						<span class="fa fa-cogs">&nbsp;</span> Configurations
 					</a></li>
 					<li><a class="" href="#">
 						<span class="fa fa-database">&nbsp;</span> Database
@@ -302,9 +299,9 @@
 		</div><!--/.row-->
 
 
+<!-- To Do List ----------------------------------------------------------------------------------------------->
 		<div class="row">
 			<div class="col-md-6">
-<!-- To Do List ----------------------------------------------------------------------------------------------->
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						To-do List
@@ -315,16 +312,16 @@
 								<ul class="dropdown-menu dropdown-menu-right">
 									<li>
 										<ul class="dropdown-settings">
-											<li><a href="#">
-												<em class="fa fa-cog"></em> Settings 1
+											<li id="todo-all"><a href="#todo-list">
+												<em class="fa fa-cog"></em> All
 											</a></li>
 											<li class="divider"></li>
-											<li><a href="#">
-												<em class="fa fa-cog"></em> Settings 2
+											<li id="todo-complete"><a href="#todo-list">
+												<em class="fa fa-cog"></em> Complete
 											</a></li>
 											<li class="divider"></li>
-											<li><a href="#">
-												<em class="fa fa-cog"></em> Settings 3
+											<li id="todo-incomplete"><a href="#todo-list">
+												<em class="fa fa-cog"></em> Incomplete
 											</a></li>
 										</ul>
 									</li>
@@ -333,9 +330,9 @@
 						</ul>
 						<span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
 					<div class="panel-body">
-						<ul class="todo-list">
+						<ul class="todo-list" id="todo-list">
 							{% for item in to_do_list %}
-							<li class="todo-list-item" id="todo-{{item.index}}">
+							<li class="todo-list-item" id="todo-{{item.index}}" status="{{item.status}}">
 								<div class="checkbox">
 									<input type="checkbox" id="checkbox-{{item.index}}" onclick="update_to_do_status('checkbox-{{item.index}}')"
 									{% if item.status == 0 %} checked {% endif %}/>
@@ -357,8 +354,9 @@
 				</div>
 			</div><!--/.col-->
 
-			<div class="col-md-6">
+
 <!-- Timeline ----------------------------------------------------------------------------------------------->
+			<div class="col-md-6">
 				<div class="panel panel-default ">
 					<div class="panel-heading">
 						Timeline
@@ -454,6 +452,7 @@
 	};
 	</script>
 	<script src="/static/js/widgets/to-do-list.js"></script>
+	<script>$("#todo-incomplete").click()</script>
 {% endblock %}
 
 {% block footer %}
