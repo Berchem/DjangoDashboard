@@ -4,7 +4,7 @@
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 		<div class="row">
 			<ol class="breadcrumb">
-				<li><a href="#">
+				<li><a href="/">
 					<em class="fa fa-home"></em>
 				</a></li>
 				<li class="active">Widgets</li>
@@ -142,6 +142,14 @@
 							</div>
 							<div class="progress">
 								<div id="memory_percent_progress" data-percentage="0%" style="width: {{info_map.memory_percent}}%" class="progress-bar progress-bar-orange" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+							<!-- memory -->
+							<div class="row progress-labels">
+								<div class="col-sm-6">Disk Usage Percent</div>
+								<div id="disk_usage_value" class="col-sm-6" style="text-align: right;">{{info_map.disk_usage}} %</div>
+							</div>
+							<div class="progress">
+								<div id="disk_usage_progress" data-percentage="0%" style="width: {{info_map.disk_usage}}%" class="progress-bar progress-bar-success" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
 							</div>
 							<!-- receive -->
 							<div class="row progress-labels">
