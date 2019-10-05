@@ -1,20 +1,22 @@
+import datetime as dt
 import os
 import time
+
 import psutil
-import datetime as dt
-
-from django.shortcuts import render
-from django.http import JsonResponse
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.shortcuts import render
 
-from Widgets.models import ToDoList
 from Widgets.models import Chat
+from Widgets.models import ToDoList
 
 max_receive_speed: float = 1e-6
 max_sent_speed: float = 1e-6
 
 
 @login_required
+@staff_member_required
 def widgets(request):
     title = "Widgets"
     info_map = _system_status()
@@ -139,8 +141,9 @@ def _system_status():
     t_0, net_io_0 = time.perf_counter(), psutil.net_io_counters()
     cpu_percent = psutil.cpu_percent()
     memory_percent = psutil.virtual_memory().percent
+    disk_usage = psutil.disk_usage("C:\\").percent
     battery_percent = psutil.sensors_battery().percent
-    battery_low = battery_percent < 10
+    battery_low = battery_percent < 5
 
     t_1, net_io_1 = time.perf_counter(), psutil.net_io_counters()
 
@@ -149,6 +152,7 @@ def _system_status():
 
     info_map = {"cpu_percent": cpu_percent,
                 "memory_percent": memory_percent,
+                "disk_usage": disk_usage,
                 "receive_speed": "%.4f" % avg_receive_speed,
                 "receive_rate": avg_receive_rate,
                 "sent_speed": "%.4f" % avg_sent_speed,
