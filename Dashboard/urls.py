@@ -15,13 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf.urls import url, include
-from Futures import views
+from Dashboard import views
 
 urlpatterns = [
     url('admin/', admin.site.urls),
     url(r'^accounts/', include('Registration.urls')),
     url('^widgets/', include('Widgets.urls')),
     url('^conf/', include('Configurations.urls')),
+    url('^jobs/', include('Jobs.urls')),
     url('^futures/', include('Futures.urls')),
 
     url('^$', views.redirect),

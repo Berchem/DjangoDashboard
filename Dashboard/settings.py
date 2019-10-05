@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'Widgets',
     'Futures',
     'Configurations',
+    'Jobs',
     'Registration',
 ]
 
